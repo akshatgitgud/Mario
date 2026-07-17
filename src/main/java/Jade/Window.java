@@ -21,7 +21,6 @@ public class Window {
         this.width = 1280;
         this.height = 720;
         this.title = "Mario";
-        System.out.println(" ");
     }
     public static Window get(){//It has a return type of object window
             if(Window.window==null){
