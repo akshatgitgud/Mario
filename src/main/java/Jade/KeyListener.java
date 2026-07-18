@@ -2,18 +2,18 @@ package Jade;
 
 import org.lwjgl.glfw.GLFW;
 
-public class Keylistner {
-    private static Keylistner instance;
+public class KeyListener {
+    private static KeyListener instance;
     private boolean keypressed[] = new boolean[350];
 
-    private Keylistner() {
+    private KeyListener() {
     };
 
-    public static Keylistner get() {
-        if (Keylistner.instance == null) {
-            Keylistner.instance = new Keylistner();
+    public static KeyListener get() {
+        if (KeyListener.instance == null) {
+            KeyListener.instance = new KeyListener();
         }
-        return Keylistner.instance;
+        return KeyListener.instance;
     }
 
     public static void keycallback(long window, int key, int scancode, int action, int mods) {

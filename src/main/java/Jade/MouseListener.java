@@ -2,14 +2,14 @@ package Jade;
 
 import org.lwjgl.glfw.GLFW;
 
-public class MouseListner {
-    private static MouseListner instance;
+public class MouseListener {
+    private static MouseListener instance;
     private double scrollx, scrolly;
     private double xPos, yPos, lastx, lasty;
     private boolean mousebuttonPressed[] = new boolean[3];
     private boolean isdragging;
 
-    public MouseListner() {
+    public MouseListener() {
         this.scrollx = 0.0;
         this.scrolly = 0.0;
         this.xPos = 0.0;
@@ -18,11 +18,11 @@ public class MouseListner {
         this.lasty = 0.0;
     }
 
-    public static MouseListner get() {
-        if (MouseListner.instance == null) {
-            MouseListner.instance = new MouseListner();
+    public static MouseListener get() {
+        if (MouseListener.instance == null) {
+            MouseListener.instance = new MouseListener();
         }
-        return MouseListner.instance;
+        return MouseListener.instance;
     }
 
     public static void mousePosCallback(long window, double xPos, double yPos) {
