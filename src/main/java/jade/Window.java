@@ -1,5 +1,6 @@
 package jade;
 
+import util.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -17,8 +18,10 @@ public class Window {
     private String title;
     private static Window window = null;
     private long glfwWindow;
-    private float r, g, b, a;
+    public float r, g, b;
+    private float a;
     private boolean fadetoblack = false;
+    private static Scene currentScene;
 
     // Defining the ratio and title of the window
     private Window() {
@@ -30,6 +33,21 @@ public class Window {
         g = 1.0f;
         a = 1.0f;
 
+    }
+
+    public static void changeScene(int newScene) {
+        switch (newScene) {
+            case 0:
+                currentScene = new LevelEditorScene();
+                // currentScene.init();
+                break;
+            case 1:
+                currentScene = new LevelScene();
+
+            default:
+                assert false : "Unknown scene" + newScene + " ";
+                break;
+        }
     }
 
     public static Window get() {
@@ -86,27 +104,38 @@ public class Window {
         // CRITICAL: Initialize LWJGL's OpenGL bindings
         // This links LWJGL to the context created by GLFW
         GL.createCapabilities();
+        Window.changeScene(0);
     }
 
     public void loop() {
+
         while (!glfwWindowShouldClose(glfwWindow)) {
+            float beginTime = Time.getTime();
+            float endTime = Time.getTime();
+            float dt = -1.0f;
             // Poll events
             glfwPollEvents();
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
-            // JUST CHECKING INPUTS
-            // if(fadetoblack){
-            // System.out.println("IS FADING");
-            // r=Math.max(r-0.01f,0);
-            // g=Math.max(g-0.01f,0);
-            // b=Math.max(b-0.01f,0);
-            // }
-            // if (Keylistner.iskeypressed(GLFW_KEY_SPACE)) {
-            // System.out.println("Space pressed");
-            // fadetoblack = true;
-            // }
-
+            if (dt >= 0){
+                currentScene.update(dt);
+            }
+            // // JUST CHECKING INPUTS
+            if (fadetoblack) {
+                // System.out.println("IS FADING");
+                r = Math.max(r - 0.01f, 0);
+                g = Math.max(g - 0.01f, 0);
+                b = Math.max(b - 0.01f, 0);
+            }
+            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && !fadetoblack) {
+                fadetoblack = true;
+                Window.changeScene(1);
+            }
             glfwSwapBuffers(glfwWindow);
+
+            endTime = Time.getTime();
+            dt = endTime - beginTime;
+            beginTime = endTime;
         }
     }
 }
