@@ -1,4 +1,4 @@
-package Jade;
+package jade;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -70,10 +70,10 @@ public class Window {
         }
 
         // Callback for mouse
-        glfwSetCursorPosCallback(glfwWindow, MouseListner::mousePosCallback);
-        glfwSetMouseButtonCallback(glfwWindow, MouseListner::mousebuttonCallback);
-        glfwSetScrollCallback(glfwWindow, MouseListner::mousescrollCallback);
-        glfwSetKeyCallback(glfwWindow, Keylistner::keycallback);
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
 
@@ -100,7 +100,7 @@ public class Window {
                 g=Math.max(g-0.01f,0);
                 b=Math.max(b-0.01f,0);
             }
-            if (Keylistner.iskeypressed(GLFW_KEY_SPACE)) {
+            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
                 System.out.println("Space pressed");
                 fadetoblack = true;
             } 
