@@ -1,7 +1,7 @@
-import Jade.Window;
+import jade.Window;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) { 
             Window window = Window.get();
             window.run();
         }

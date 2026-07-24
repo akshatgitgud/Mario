@@ -1,6 +1,5 @@
 package jade;
 
-// import static org.lwjgl.opengl.GL11.GL_COLOR_ARRAY_TYPE;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -12,15 +11,11 @@ import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
 import static org.lwjgl.opengl.GL15.glGenBuffers;
-// import java.awt.event.KeyEvent;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
-
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-
 import org.lwjgl.BufferUtils;
-
 import renderer.Shader;
 
 class LevelEditorScene extends Scene {
@@ -38,7 +33,9 @@ class LevelEditorScene extends Scene {
             "in vec4 fColor;\n" + //
             "out vec4 color;\n" + //
             "void main() { color = fColor; }";
+
     private int vertexID, fragmentID, shaderProgramID;
+
     private float[] vertexArray = {
             // Position //color
             0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
@@ -46,6 +43,7 @@ class LevelEditorScene extends Scene {
             0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top right 2
             -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,// Bottom left 3
     };
+
     // Must be in counterclockwise manner
     private int[] elementArray = {
             /*
@@ -62,6 +60,7 @@ class LevelEditorScene extends Scene {
 
     private Shader defaultShader;
 
+    // EMPTY CONSTRUCTOR
     public LevelEditorScene() {
 
     };
@@ -70,8 +69,6 @@ class LevelEditorScene extends Scene {
     public void init() {
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
-
-        // COMPILE AND LOAD SHADERS
 
         // LOAD AND COMPILE VERTEX SHADER
         vertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -83,13 +80,13 @@ class LevelEditorScene extends Scene {
         // Check for errors during compilation
         int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
-            int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
+        //  int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: 'defaultShader.glsl'\n\tVertex shader compilation failed");
             System.out.println(glGetShaderInfoLog(vertexID));
             assert false : " ";
         }
 
-        // LOAD AND COMPILE VERTEX SHADER
+        // LOAD AND COMPILE FRAGMENT SHADER
         fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
         // PASS THE SHADER SOURCE CODE
         glShaderSource(fragmentID, fragmentShaderSrc);
@@ -99,7 +96,7 @@ class LevelEditorScene extends Scene {
         // Check for errors during compilation
         success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
-            int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
+        //  int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: 'defaultShader.glsl'\n\tFragment shader compilation failed");
             System.out.println(glGetShaderInfoLog(fragmentID));
             assert false : " ";
@@ -114,7 +111,7 @@ class LevelEditorScene extends Scene {
         // Linking errors
         success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
         if (success == GL_FALSE) {
-            int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
+        //  int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: 'defaultShader.glsl'\n\tLinking shader failed");
             System.out.println(glGetProgramInfoLog(shaderProgramID));
             assert false : " ";

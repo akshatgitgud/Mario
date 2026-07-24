@@ -4,10 +4,7 @@ import util.Time;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-// import org.lwjgl.glfw.GLFWVidMode;
 import java.util.Objects;
-// import org.lwjgl.glfw.Callbacks.*;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -93,6 +90,7 @@ public class Window {
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
 
@@ -109,36 +107,35 @@ public class Window {
     }
 
     public void loop() {
-    float beginTime = Time.getTime();
-    float endTime;
-    float dt = -1.0f;
+        float beginTime = Time.getTime();
+        float endTime;
+        float dt = -1.0f;
 
-    while (!glfwWindowShouldClose(glfwWindow)) {
-        // Poll events
-        glfwPollEvents();
-        glClearColor(r, g, b, a);
-        glClear(GL_COLOR_BUFFER_BIT);
+        while (!glfwWindowShouldClose(glfwWindow)) {
+            // Poll events
+            glfwPollEvents();
+            glClearColor(r, g, b, a);
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        if (dt >= 0) {
-            currentScene.update(dt);
+            if (dt >= 0) {
+                currentScene.update(dt);
+            }
+
+            if (fadetoblack) {
+                r = Math.max(r - 0.01f, 0);
+                g = Math.max(g - 0.01f, 0);
+                b = Math.max(b - 0.01f, 0);
+            }
+            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && !fadetoblack) {
+                fadetoblack = true;
+                Window.changeScene(1);
+            }
+
+            glfwSwapBuffers(glfwWindow);
+
+            endTime = Time.getTime();
+            dt = endTime - beginTime;
+            beginTime = endTime;
         }
-
-        if (fadetoblack) {
-            r = Math.max(r - 0.01f, 0);
-            g = Math.max(g - 0.01f, 0);
-            b = Math.max(b - 0.01f, 0);
-        }
-        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && !fadetoblack) {
-            fadetoblack = true;
-            Window.changeScene(1);
-        }
-
-        glfwSwapBuffers(glfwWindow);
-
-        endTime = Time.getTime();
-        dt = endTime - beginTime;
-        beginTime = endTime;
     }
 }
-    }
-

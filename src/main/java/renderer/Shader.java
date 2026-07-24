@@ -49,7 +49,9 @@ public class Shader {
         System.out.println(vertexSource);
         System.out.println(fragmentSource);
     }
+
     private int shaderProgramID;
+
     public void compile() {
         shaderProgramID = glCreateProgram();
         // COMPILE AND LINK SHADER
