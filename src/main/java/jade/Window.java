@@ -22,8 +22,8 @@ public class Window {
 
     // Defining the ratio and title of the window
     private Window() {
-        this.width = 1280;
-        this.height = 720;
+        this.width = 1920;
+        this.height = 1080;
         this.title = "Mario";
         r = 1.0f;
         b = 1.0f;
