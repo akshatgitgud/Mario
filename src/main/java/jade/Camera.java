@@ -17,16 +17,17 @@ public class Camera {
 
     public void adjustProjection() {
         projectionMatrix.identity(); // Directly alters the matrix so should be careful
-        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f, 0.0f, 100.0f);
+        float aspect = 1920.0f / 1080.0f; // 1.778
+        projectionMatrix.ortho(0.0f, 32.0f * aspect, 0.0f, 32.0f, 0.0f, 100.0f);
     }
 
     // Defines where the camera is at
     public Matrix4f getViewMatrix() {
         Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
-        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, -1.0f);
+        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
         this.viewMatrix.identity();
         this.viewMatrix = viewMatrix.lookAt(new Vector3f(position.x,position.y,20.0f),
-                cameraFront.add(position.x, position.y, 0.0f), cameraUp);
+        cameraFront.add(position.x, position.y, 0.0f), cameraUp);
         //camera -> *(camerafront)
         return this.viewMatrix;
     }

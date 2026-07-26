@@ -19,6 +19,7 @@ import java.nio.IntBuffer;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import renderer.Shader;
+import util.Time;
 
 class LevelEditorScene extends Scene {
     private String vertexShaderSrc = "#version 330 core\n" +
@@ -39,11 +40,11 @@ class LevelEditorScene extends Scene {
     private int vertexID, fragmentID, shaderProgramID;
 
     private float[] vertexArray = {
-            // Position //color
-            100.5f, -0.5f, 0.0f,      1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
-            -0.5f, 100.5f, 0.0f,      0.0f, 0.0f, 1.0f, 1.0f, // Top left 1
-            100.5f, 100.5f, 0.0f,       0.0f, 0.0f, 1.0f, 1.0f, // Top right 2
-            -0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 0.0f, 1.0f,// Bottom left 3
+            // Position // Color
+            10.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
+            0.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top left 1
+            10.0f, 10.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, // Top right 2
+            0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, // Bottom left 3
     };
 
     // Must be in counterclockwise manner
@@ -83,7 +84,7 @@ class LevelEditorScene extends Scene {
         // Check for errors during compilation
         int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
-        //  int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
+            // int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: 'defaultShader.glsl'\n\tVertex shader compilation failed");
             System.out.println(glGetShaderInfoLog(vertexID));
             assert false : " ";
@@ -99,7 +100,7 @@ class LevelEditorScene extends Scene {
         // Check for errors during compilation
         success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
-        //  int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
+            // int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: 'defaultShader.glsl'\n\tFragment shader compilation failed");
             System.out.println(glGetShaderInfoLog(fragmentID));
             assert false : " ";
@@ -114,7 +115,7 @@ class LevelEditorScene extends Scene {
         // Linking errors
         success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
         if (success == GL_FALSE) {
-        //  int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
+            // int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
             System.out.println("ERROR: 'defaultShader.glsl'\n\tLinking shader failed");
             System.out.println(glGetProgramInfoLog(shaderProgramID));
             assert false : " ";
@@ -155,10 +156,12 @@ class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-        camera.position.x -= dt*50.0f;
+        camera.position.x -= dt * 3.0f;
+        camera.position.y -= dt * 3.0f;
         defaultShader.use();
         defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
+        defaultShader.uploadFloat("uTime", Time.getTime());
         // BIND SHADER PROGRAM
         // glUseProgram(shaderProgramID);
         // BIND THE VAO WE ARE USING
