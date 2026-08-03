@@ -17,7 +17,7 @@ public class Window {
     private long glfwWindow;
     public float r, g, b;
     private float a;
-    private boolean fadetoblack = false;
+    private boolean fadeToBlack = false;
     private static Scene currentScene;
 
     // Defining the ratio and title of the window
@@ -121,13 +121,13 @@ public class Window {
                 currentScene.update(dt);
             }
 
-            if (fadetoblack) {
+            if (fadeToBlack) {
                 r = Math.max(r - 0.01f, 0);
                 g = Math.max(g - 0.01f, 0);
                 b = Math.max(b - 0.01f, 0);
             }
-            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && !fadetoblack) {
-                fadetoblack = true;
+            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) && !fadeToBlack) {
+                fadeToBlack = true;
                 Window.changeScene(1);
             }
 

@@ -150,7 +150,7 @@ class LevelEditorScene extends Scene {
         glEnableVertexAttribArray(0);
 
         glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionSize * floatSizeBytes);
-        ;
+        
         glEnableVertexAttribArray(1);
     }
 
