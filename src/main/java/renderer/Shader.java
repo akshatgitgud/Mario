@@ -110,9 +110,9 @@ public class Shader {
     }
 
     public void use() {
-        if(!beingUsed){
-        glUseProgram(shaderProgramID);
-        beingUsed = true;
+        if (!beingUsed) {
+            glUseProgram(shaderProgramID);
+            beingUsed = true;
         }
     }
 
@@ -153,7 +153,7 @@ public class Shader {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
         glUniform2f(varLocation, vec.x, vec.y);
-    } 
+    }
 
     public void uploadFloat(String varName, float val) {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
@@ -162,6 +162,12 @@ public class Shader {
     }
 
     public void uploadInt(String varName, int val) {
+        int varLocation = glGetUniformLocation(shaderProgramID, varName);
+        use();
+        glUniform1i(varLocation, val);
+    }
+
+    public void uploadTexture(String varName, int val) {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
         glUniform1i(varLocation, val);
