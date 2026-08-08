@@ -57,8 +57,7 @@ public class Shader {
             e.printStackTrace();
             assert false : "Error:Could not open file for shader:'" + filePath + "'";
         }
-        System.out.println(vertexSource);
-        System.out.println(fragmentSource);
+
     }
 
     public void compile() {
@@ -75,7 +74,7 @@ public class Shader {
         int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
             // int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-            System.out.println("ERROR: " + filePath + "'defaultShader.glsl'\n\tVertex shader compilation failed");
+            System.out.println("ERROR: " + filePath + "\n\tVertex shader compilation failed");
             System.out.println(glGetShaderInfoLog(vertexID));
             assert false : " ";
         }
@@ -89,7 +88,7 @@ public class Shader {
         success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
         if (success == GL_FALSE) {
             // int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-            System.out.println("ERROR: " + filePath + "'defaultShader.glsl'\n\tFragment shader compilation failed");
+            System.out.println("ERROR: " + filePath + "\n\tFragment shader compilation failed");
             System.out.println(glGetShaderInfoLog(fragmentID));
             assert false : " ";
         }
