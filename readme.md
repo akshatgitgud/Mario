@@ -4,7 +4,7 @@ A 2D game engine built from scratch in Java, using LWJGL, GLFW, OpenGL, and Grad
 
 This project is currently under active development. The goal is to build a modular and extensible game engine while learning the fundamentals of game-engine architecture, rendering, input handling, scenes, cameras, textures, shaders, and game objects. 
 
-> Status: 🚧 In Development
+> Status: 🚧 currently on an indefinite HIATUS </3
 ### Tech Stack 
 | Technology | Purpose                           |
 | ---------- | --------------------------------- |
